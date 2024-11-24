@@ -1,43 +1,70 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			contacts: [],
+			urlBase:"https://playground.4geeks.com/contact"
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			getAllContacts: async () => {
+				try {
+					const response = await fetch(`${getStore().urlBase}/agendas/cristopher/contacts`)
+					const data = await response.json()
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+					if (response.ok) {
+						setStore({
+							contacts: data.contacts
 
-				//reset the global store
-				setStore({ demo: demo });
+						})
+					} else {
+						const response = await fetch(`${getStore().urlBase}/agendas/cristopher`,
+							{
+								method: "POST",
+							})
+						console.log(response)
+					}
+				} catch (error) {
+					console.log(error)
+				}
+			},
+			addContact:async(data)=>{
+				const actions = getActions()
+				try {
+					const response = await fetch(`${getStore().urlBase}/agendas/cristopher/contacts`,{
+						method:"POST",
+						body: JSON.stringify(data),
+						headers:{
+							"Content-Type":"application/json"
+						}
+						
+					})
+					console.log("respuesta",response)
+					if(response.ok){
+						actions().getAllContacts()
+					}
+				} catch (error) {
+					console.log(error)
+				}
+			},
+
+			deleteContact:async(id)=>{
+				console.log(id)
+				try {
+					const response = await fetch (`${getStore().urlBase}/agendas/cristopher/contacts/${id}`,
+						{
+							method:"DELETE"
+						}
+					)
+					if(response.ok){
+						getActions().getAllContacts()
+					}
+					
+				} catch (error) {
+					console.log(error)
+				}
 			}
+
+
+
 		}
 	};
 };
