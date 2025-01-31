@@ -19,6 +19,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const response = await fetch(`${getStore().urlBase}/agendas/cristopher`,
 							{
 								method: "POST",
+								headers:{
+									"Content-type":"application/json"
+								},
+								body:{
+									"name":"",
+									"phone":"",
+									"email":"",
+									"address":""
+								}
 							})
 						console.log(response)
 					}
@@ -39,13 +48,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log("respuesta",response)
 					if(response.ok){
-						actions().getAllContacts()
+						actions.getAllContacts()
 					}
 				} catch (error) {
 					console.log(error)
 				}
 			},
 
+			editContact: async(editContact, id)=>{
+				try {
+					let response = await fetch(`${getStore().urlBase}/agendas/cristopher/contacts/${id}`,{
+						method:"PUT",
+						headers:{
+							"Content-Type":"application/json",
+						},
+						body: JSON.stringify(editContact)
+					})
+					getActions().getAllContacts()
+				} catch (error) {
+				  console.log(error)
+				}
+			},
 			deleteContact:async(id)=>{
 				console.log(id)
 				try {

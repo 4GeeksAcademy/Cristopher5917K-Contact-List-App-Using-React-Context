@@ -26,7 +26,22 @@ img{
     opacity: 1;
 }
 
+.icon-edit{
+    display: flex;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    justify-content: end;
+    align-items: center;
+    padding-right: 15px;
+    
+}
 
+.position{
+    display: flex;
+    position: absolute;
+    margin-left: 50px;
+}
 .btnSettings{
     position: relative;
     left: 850px;
@@ -36,4 +51,10 @@ img{
 
 .contactColor{
     color: rgb(129, 129, 129);
+}
+
+.edit-position{
+    position: absolute;
+    display: flex;
+    left: 940px;
 }

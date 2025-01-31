@@ -11,7 +11,7 @@ const AddContact = () => {
 		name:"",
 		email:"",
 		phone:"",
-		addres:""
+		address:""
 	})
 	
 
@@ -21,8 +21,6 @@ const AddContact = () => {
 			[target.name]: target.value
 		})
 		
-	
-
 	}
 	const addNewContact = () =>	{
 		actions.addContact(contact)
@@ -68,9 +66,9 @@ const AddContact = () => {
 							<label>Addres</label>
 							<input className="input form-control"
 								placeholder="Ingrese su dirección"
-								name="addres"
+								name="address"
 								onChange={handleChange}
-								value={contact.addres}
+								value={contact.address}
 							/>
 						</div>
 						<div className="col-12 col-md-6">
